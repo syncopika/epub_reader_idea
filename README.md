@@ -1,10 +1,9 @@
-# README
-
-## About epub_reader_idea
+# epub_reader_idea
 
 A super basic .epub reader made with Wails! It currently can only display text and styling (no images or functional links atm).    
     
 ![gif of app](11-10-2024_193147.gif)    
+You can find free eBooks at https://www.gutenberg.org/. This gif is showing the contents of *A New, Practical and Easy Method of Learning the Portuguese Language* by F. Ahn.    
     
 You can configure the project by editing `wails.json`. More information about the project settings can be found
 here: https://wails.io/docs/reference/project-config
