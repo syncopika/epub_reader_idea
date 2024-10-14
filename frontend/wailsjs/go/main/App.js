@@ -13,3 +13,7 @@ export function NextFile() {
 export function PrevFile() {
   return window['go']['main']['App']['PrevFile']();
 }
+
+export function UpdatePage() {
+  return window['go']['main']['App']['UpdatePage']();
+}

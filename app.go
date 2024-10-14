@@ -103,6 +103,12 @@ func (a *App) LoadEpubFile() {
 	runtime.EventsEmit(a.ctx, "page", string(a.htmlFiles[0]))
 }
 
+func (a *App) UpdatePage() {
+	if a.ctx != nil {
+		runtime.EventsEmit(a.ctx, "page", string(a.htmlFiles[a.currPage]))
+	}
+}
+
 func (a *App) PrevFile() {
 	if len(a.htmlFiles) == 0 {
 		return
@@ -113,7 +119,7 @@ func (a *App) PrevFile() {
 		a.currPage = 0
 	}
 
-	runtime.EventsEmit(a.ctx, "page", string(a.htmlFiles[a.currPage]))
+	a.UpdatePage()
 }
 
 func (a *App) NextFile() {
@@ -126,5 +132,5 @@ func (a *App) NextFile() {
 		a.currPage = 0
 	}
 
-	runtime.EventsEmit(a.ctx, "page", string(a.htmlFiles[a.currPage]))
+	a.UpdatePage()
 }

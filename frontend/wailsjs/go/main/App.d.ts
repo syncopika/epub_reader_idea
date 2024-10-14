@@ -6,3 +6,5 @@ export function LoadEpubFile():Promise<void>;
 export function NextFile():Promise<void>;
 
 export function PrevFile():Promise<void>;
+
+export function UpdatePage():Promise<void>;
