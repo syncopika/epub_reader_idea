@@ -77,3 +77,76 @@ func TestAppNextFile(t *testing.T) {
 		t.Fatalf("currPage is not 0 after calling nextfile on last page")
 	}
 }
+
+func TestHtmlRegex(t *testing.T) {
+	app := NewApp()
+	app.ctx = nil
+
+	htmlRegex := app.HtmlRegex()
+	match1 := htmlRegex.MatchString("blah.html")
+	if !match1 {
+		t.Fatalf("blah.html should be valid")
+	}
+
+	match2 := htmlRegex.MatchString("blah.htm")
+	if !match2 {
+		t.Fatalf("blah.htm should be valid")
+	}
+
+	match3 := htmlRegex.MatchString("blah.mklmfkl.html")
+	if !match3 {
+		t.Fatalf("blah.mklmfkl.html should be valid")
+	}
+
+	match4 := htmlRegex.MatchString("blah.xhtml")
+	if !match4 {
+		t.Fatalf("blah.xhtml should be valid")
+	}
+
+	noMatch1 := htmlRegex.MatchString("blah.xhtmlz")
+	if noMatch1 {
+		t.Fatalf("blah.xhtmlz should not be valid")
+	}
+
+	noMatch2 := htmlRegex.MatchString("blah.htmlo")
+	if noMatch2 {
+		t.Fatalf("blah.htmlo should not be valid")
+	}
+
+	noMatch3 := htmlRegex.MatchString("blah.html.sdnfksdnl")
+	if noMatch3 {
+		t.Fatalf("blah.html.sdnfksdnl should not be valid")
+	}
+
+	noMatch4 := htmlRegex.MatchString("blah.hhtml")
+	if noMatch4 {
+		t.Fatalf("blah.hhtml should not be valid")
+	}
+}
+
+func TestCssRegex(t *testing.T) {
+	app := NewApp()
+	app.ctx = nil
+
+	cssRegex := app.CssRegex()
+
+	match1 := cssRegex.MatchString("blah.css")
+	if !match1 {
+		t.Fatalf("blah.css should be valid")
+	}
+
+	noMatch1 := cssRegex.MatchString("blah.cs")
+	if noMatch1 {
+		t.Fatalf("blah.cs should not be valid")
+	}
+
+	noMatch2 := cssRegex.MatchString("blah.css.html")
+	if noMatch2 {
+		t.Fatalf("blah.css.html should not be valid")
+	}
+
+	noMatch3 := cssRegex.MatchString("blah.ccss")
+	if noMatch3 {
+		t.Fatalf("blah.ccss should not be valid")
+	}
+}

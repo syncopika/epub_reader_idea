@@ -29,6 +29,14 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
+func (a *App) HtmlRegex() *regexp.Regexp {
+	return regexp.MustCompile(`\.x{0,1}html{0,1}$`)
+}
+
+func (a *App) CssRegex() *regexp.Regexp {
+	return regexp.MustCompile(`\.css$`)
+}
+
 func (a *App) LoadEpubFile() {
 	fmt.Println("opening dialog options")
 
@@ -60,10 +68,8 @@ func (a *App) LoadEpubFile() {
 	}
 	defer r.Close()
 
-	// TODO: are we sure this will capture only files with
-	// extension .xhtml, .htm, .html?
-	htmlRegex := regexp.MustCompile(`.x{0,1}html{0,1}`)
-	cssRegex := regexp.MustCompile(`.css`) // and this too for .css?
+	htmlRegex := a.HtmlRegex()
+	cssRegex := a.CssRegex()
 
 	for _, f := range r.File {
 		if htmlRegex.MatchString(f.Name) {
