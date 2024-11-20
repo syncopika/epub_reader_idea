@@ -10,6 +10,10 @@ export function HtmlRegex() {
   return window['go']['main']['App']['HtmlRegex']();
 }
 
+export function ImageRegex() {
+  return window['go']['main']['App']['ImageRegex']();
+}
+
 export function LoadEpubFile() {
   return window['go']['main']['App']['LoadEpubFile']();
 }

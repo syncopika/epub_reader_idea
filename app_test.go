@@ -150,3 +150,35 @@ func TestCssRegex(t *testing.T) {
 		t.Fatalf("blah.ccss should not be valid")
 	}
 }
+
+func TestImageRegex(t *testing.T) {
+	app := NewApp()
+	app.ctx = nil
+
+	imageRegex := app.ImageRegex()
+
+	match1 := imageRegex.MatchString("sdjkfkl.png")
+	if !match1 {
+		t.Fatalf("sdjkfkl.png should be valid")
+	}
+
+	noMatch1 := imageRegex.MatchString("sdfjksdfjk.pn")
+	if noMatch1 {
+		t.Fatalf("sdfjksdfjk.pn should not be valid")
+	}
+
+	match2 := imageRegex.MatchString("sdfjk.jpg")
+	if !match2 {
+		t.Fatalf("sdfjk.jpg should be valid")
+	}
+
+	match3 := imageRegex.MatchString("blah.png.jpg")
+	if !match3 {
+		t.Fatalf("blah.png.jpg should be valid")
+	}
+  
+	noMatch2 := imageRegex.MatchString("blah.pnga")
+	if noMatch2 {
+		t.Fatalf("blah.pnga should not be valid")
+	}
+}
