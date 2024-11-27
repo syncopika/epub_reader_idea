@@ -176,7 +176,7 @@ func TestImageRegex(t *testing.T) {
 	if !match3 {
 		t.Fatalf("blah.png.jpg should be valid")
 	}
-  
+
 	noMatch2 := imageRegex.MatchString("blah.pnga")
 	if noMatch2 {
 		t.Fatalf("blah.pnga should not be valid")
