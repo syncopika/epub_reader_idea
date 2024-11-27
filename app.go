@@ -86,12 +86,12 @@ func (a *App) LoadEpubFile() {
 
 	for _, f := range r.File {
 		if htmlRegex.MatchString(f.Name) {
-			//fmt.Printf("found html file: %s\n", f.Name)
-
 			fileReader, err := f.Open()
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			defer fileReader.Close()
 
 			data, err := io.ReadAll(fileReader)
 			if err != nil {
@@ -99,13 +99,13 @@ func (a *App) LoadEpubFile() {
 			}
 
 			a.htmlFiles = append(a.htmlFiles, data)
-
-			fileReader.Close()
 		} else if cssRegex.MatchString(f.Name) {
 			fileReader, err := f.Open()
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			defer fileReader.Close()
 
 			cssData, err := io.ReadAll(fileReader)
 			if err != nil {
@@ -113,15 +113,14 @@ func (a *App) LoadEpubFile() {
 			}
 
 			runtime.EventsEmit(a.ctx, "style", string(cssData))
-
-			fileReader.Close()
 		} else if imageRegex.MatchString(f.Name) {
 			// write image to temp directory
 			fileReader, err := f.Open()
-
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			defer fileReader.Close()
 
 			imgData, err := io.ReadAll(fileReader)
 
@@ -154,7 +153,8 @@ func (a *App) PrevFile() {
 
 	a.currPage = a.currPage - 1
 	if a.currPage < 0 {
-		a.currPage = 0
+		// wraparound
+		a.currPage = len(a.htmlFiles) - 1
 	}
 
 	a.UpdatePage()
